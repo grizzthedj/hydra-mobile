@@ -1,0 +1,7 @@
+{
+  "name": "hydra-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
