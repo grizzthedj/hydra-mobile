@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonAlert, IonList, IonItem, IonLabel, IonText, IonModal, IonTextarea, IonInput } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonAlert, IonList, IonItem, IonLabel, IonText, IonModal, IonTextarea, IonInput, IonSelect, IonSelectOption } from '@ionic/react';
 import './Activities.css';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
@@ -7,12 +7,11 @@ class Activity extends React.Component {
   constructor(props) {
     super(props);
 
-    this.init();
     this.state = {
       name: "",
       details: "",
-      showNewActivity: false,
-      categories: ["Health", "Chores", "Social", "Gaming", "Sports"]
+      category: "",
+      showNewActivity: false
     }
 
     this.create = this.create.bind(this);
@@ -20,31 +19,23 @@ class Activity extends React.Component {
   }
 
   create() {
-    // try {
-    //   SQLite.create({
-    //     name: 'hydra.db', location: 'default'
-    //   }).then(async (db: SQLiteObject) => {
-    //     try {
-    //       db.executeSql('select * from activities', {}).then(result => {
-    //         var data = [];
-    //         for (var i = 0; i < result.rows.length; i++) {
-    //           data.push({
-    //             name: result.rows.item(i).name
-    //           })
-    //         }
-    //         this.setState(() => ({
-    //           activities: data
-    //         }));
-    //       }).catch(e => console.log(e))
-    //     } 
-    //     catch (e) {
-    //       console.log(e);
-    //     }
-    //   })
-    // } 
-    // catch(e) {
-    //   console.log(e)
-    // }
+    try {
+      SQLite.create({
+        name: 'hydra.db', location: 'default'
+      }).then(async (db: SQLiteObject) => {
+        try {
+          db.executeSql('insert into activities values(?, ?, ?)', [this.state.name, this.state.category, this.state.details, ])
+		        .then(() => console.log("Inserted activity"))
+            .catch(e => console.log(e));
+        } 
+        catch (e) {
+          console.log(e);
+        }
+      })
+    } 
+    catch(e) {
+      console.log(e)
+    }
   }
 
   handleChange(event) {
@@ -69,8 +60,23 @@ class Activity extends React.Component {
               <IonTitle size="large">New Activity</IonTitle>
             </IonToolbar>
           </IonHeader>
-          {/* <IonInput value={this.state.name} placeholder="Activity Name" onIonChange={e => this.handleChange(e)}></IonInput>
-          <IonTextarea placeholder="More detail please ..." value={this.state.details} onIonChange={e => this.handleChange(e)}></IonTextarea>  */}
+          <IonLabel>Name</IonLabel>
+          <IonInput id="name" name="name" value={this.state.name} placeholder="Activity Name" onIonChange={e => this.handleChange(e)}></IonInput>
+          
+          <IonLabel>Category</IonLabel>
+          <IonSelect id="category" name="category" value={this.state.category} okText="Okay" cancelText="Dismiss" onIonChange={e => this.handleChange(e)}>
+            <IonSelectOption value="Health">Health</IonSelectOption>
+            <IonSelectOption value="Chores">Chores</IonSelectOption>
+            <IonSelectOption value="Social">Social</IonSelectOption>
+            <IonSelectOption value="Gaming">Gaming</IonSelectOption>
+            <IonSelectOption value="Sports">Sports</IonSelectOption>
+            <IonSelectOption value="Custom">Add Your Own</IonSelectOption>
+          </IonSelect>
+        
+          <IonLabel>Details</IonLabel>
+          <IonTextarea id="details" name="details" value={this.state.details} placeholder="More detail please ..." onIonChange={e => this.handleChange(e)}></IonTextarea> 
+
+          <IonButton routerLink="/activities" onClick={this.create}>Create</IonButton>
         </IonContent>
       </IonPage>
     );

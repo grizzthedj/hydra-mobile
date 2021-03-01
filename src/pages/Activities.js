@@ -13,7 +13,6 @@ class Activities extends React.Component {
     }
 
     this.init = this.init.bind(this);
-    this.newActivity = this.newActivity.bind(this);
   }
 
   init() {
@@ -22,12 +21,9 @@ class Activities extends React.Component {
         name: 'hydra.db', location: 'default'
       }).then(async (db: SQLiteObject) => {
         try {
-          db.executeSql('create table if not exists activities(name TEXT)', {})
+          db.executeSql('create table if not exists activities(name TEXT, category TEXT, details TEXT)', {})
 		        .then(() => console.log("Created activities table"))
             .catch(e => console.log(e));
-          // db.executeSql('insert into activities values(?)', ['Go for a long walk'])
-		      //   .then(() => console.log("Inserted activity"))
-          //   .catch(e => console.log(e));
           db.executeSql('select * from activities', {}).then(result => {
             var data = [];
             for (var i = 0; i < result.rows.length; i++) {
@@ -50,10 +46,6 @@ class Activities extends React.Component {
     }
   }
 
-  newActivity(show) {
-
-  }
-
   render() {
     const { activities, showNewActivity } = this.state;
     
@@ -70,7 +62,11 @@ class Activities extends React.Component {
               <IonTitle size="large">Activities</IonTitle>
             </IonToolbar>
           </IonHeader>
-          <IonButton onClick={this.newActivity(true)}>New Activity</IonButton>
+
+          <IonItem routerLink="/activities/new">
+            <IonLabel><b>New Activity</b></IonLabel>
+          </IonItem>
+
           <IonList>
             {activities.length > 0 ? activities.map((item, index) => {
               return (
