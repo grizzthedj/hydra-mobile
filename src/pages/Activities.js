@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonAlert, IonList, IonItem, IonLabel, IonText } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonAlert, IonList, IonItem, IonLabel, IonText, IonModal, IonTextarea, IonInput } from '@ionic/react';
 import './Activities.css';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
@@ -16,7 +16,7 @@ class Activities extends React.Component {
     this.newActivity = this.newActivity.bind(this);
   }
 
-  init = () => {
+  init() {
     try {
       SQLite.create({
         name: 'hydra.db', location: 'default'
@@ -25,6 +25,9 @@ class Activities extends React.Component {
           db.executeSql('create table if not exists activities(name TEXT)', {})
 		        .then(() => console.log("Created activities table"))
             .catch(e => console.log(e));
+          // db.executeSql('insert into activities values(?)', ['Go for a long walk'])
+		      //   .then(() => console.log("Inserted activity"))
+          //   .catch(e => console.log(e));
           db.executeSql('select * from activities', {}).then(result => {
             var data = [];
             for (var i = 0; i < result.rows.length; i++) {
@@ -47,12 +50,12 @@ class Activities extends React.Component {
     }
   }
 
-  newActivity = () => {
-    console.log("Creating New activity");
+  newActivity(show) {
+
   }
 
   render() {
-    const { activities } = this.state;
+    const { activities, showNewActivity } = this.state;
     
     return (
       <IonPage>
@@ -67,7 +70,7 @@ class Activities extends React.Component {
               <IonTitle size="large">Activities</IonTitle>
             </IonToolbar>
           </IonHeader>
-          <IonButton onClick={this.newActivity}>New Activity</IonButton>
+          <IonButton onClick={this.newActivity(true)}>New Activity</IonButton>
           <IonList>
             {activities.length > 0 ? activities.map((item, index) => {
               return (
@@ -76,12 +79,12 @@ class Activities extends React.Component {
                     <IonText className="font-weight: bold;">
                       <h3>{item["name"]}</h3>
                     </IonText>
-
+                    
                   </IonLabel>
                   <br></br>
                 </IonItem>
               );
-            }) : "You have no activities. Don't be lazy!"}
+            }) : " You have no activities ... Don't be lazy!"}
           </IonList>
         </IonContent>
       </IonPage>

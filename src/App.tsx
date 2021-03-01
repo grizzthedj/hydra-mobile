@@ -11,6 +11,7 @@ import {
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, triangle, book, settings, notifications, clipboard } from 'ionicons/icons';
 import Activities from './pages/Activities';
+import Activity from './pages/Activity';
 import Reminders from './pages/Reminders';
 import Journals from './pages/Journals';
 import Settings from './pages/Settings';
@@ -41,6 +42,9 @@ const App: React.FC = () => (
         <IonRouterOutlet>
           <Route exact path="/activities">
             <Activities />
+          </Route>
+          <Route exact path="/activities/new">
+            <Activity />
           </Route>
           <Route exact path="/reminders">
             <Reminders />
