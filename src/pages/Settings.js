@@ -1,14 +1,13 @@
-import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonToggle, IonList, IonItem, IonDatetime, IonLabel, IonItemDivider } from '@ionic/react';
+import ExploreContainer from '../components/ExploreContainer';
 import './Settings.css';
 
-class Settings extends React.Component {
+class Journals extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      reminder: "off",
-      notificationTime: ""
+      activities: []
     }
   }
 
