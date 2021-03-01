@@ -18,19 +18,22 @@ class Activities extends React.Component {
   init() {
     try {
       SQLite.create({
-        name: 'hydra2.db', location: 'default'
+        name: 'hydra.db', location: 'default'
       }).then(async (db: SQLiteObject) => {
         try {
-          db.executeSql('create table if not exists activities(name TEXT, category TEXT, details TEXT)', {})
+          db.executeSql('create table if not exists activities(name TEXT, status TEXT, category TEXT, details TEXT, complete_by TEXT)', {})
 		        .then(() => console.log("Created activities table"))
             .catch(e => console.log(e));
-          db.executeSql('select * from activities', {}).then(result => {
+          db.executeSql('select rowid as id, name, status, category, details, complete_by from activities', {}).then(result => {
             var data = [];
             for (var i = 0; i < result.rows.length; i++) {
               data.push({
+                id: result.rows.item(i).id,
                 name: result.rows.item(i).name,
+                status: result.rows.item(i).status,
                 category: result.rows.item(i).category,
-                details: result.rows.item(i).details
+                details: result.rows.item(i).details,
+                complete_by: result.rows.item(i).complete_by,
               })
             }
             this.setState(() => ({
@@ -65,21 +68,15 @@ class Activities extends React.Component {
             </IonToolbar>
           </IonHeader>
 
-          <IonItem routerLink="/activities/new">
+          <IonItem routerLink="/activity/new">
             <IonLabel><b>New Activity</b></IonLabel>
           </IonItem>
 
           <IonList>
             {activities.length > 0 ? activities.map((item, index) => {
               return (
-                <IonItem key={index}>
-                  <IonLabel>
-                    <IonText className="font-weight: bold;">
-                      <h3>{item["name"]}</h3>
-                    </IonText>
-                    
-                  </IonLabel>
-                  <br></br>
+                <IonItem key={index} routerLink={"/activities/" + item["id"]}>
+                  <IonLabel><b>{item["name"]}</b></IonLabel>
                 </IonItem>
               );
             }) : " You have no activities ... Don't be lazy!"}

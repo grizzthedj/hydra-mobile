@@ -18,7 +18,7 @@ class Journals extends React.Component {
   init() {
     try {
       SQLite.create({
-        name: 'hydra2.db', location: 'default'
+        name: 'hydra3.db', location: 'default'
       }).then(async (db: SQLiteObject) => {
         try {
           db.executeSql('create table if not exists journals(mood TEXT, start_date TEXT, went_well TEXT, gone_better TEXT, thankful TEXT)', {})
@@ -68,7 +68,7 @@ class Journals extends React.Component {
             </IonToolbar>
           </IonHeader>
 
-          <IonItem routerLink="/journals/new">
+          <IonItem routerLink="/journal/new">
             <IonLabel><b>New Journal Entry</b></IonLabel>
           </IonItem>
 

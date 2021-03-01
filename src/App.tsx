@@ -44,7 +44,10 @@ const App: React.FC = () => (
           <Route exact path="/activities">
             <Activities />
           </Route>
-          <Route exact path="/activities/new">
+          <Route exact path="/activities/:id">
+            <Activity />
+          </Route>
+          <Route exact path="/activity/new">
             <Activity />
           </Route>
           <Route exact path="/reminders">
@@ -53,7 +56,7 @@ const App: React.FC = () => (
           <Route exact path="/journals">
             <Journals />
           </Route>
-          <Route exact path="/journals/new">
+          <Route exact path="/journal/new">
             <Journal />
           </Route>
           <Route exact path="/settings">
