@@ -18,7 +18,7 @@ class Activities extends React.Component {
   init() {
     try {
       SQLite.create({
-        name: 'hydra.db', location: 'default'
+        name: 'hydra2.db', location: 'default'
       }).then(async (db: SQLiteObject) => {
         try {
           db.executeSql('create table if not exists activities(name TEXT, category TEXT, details TEXT)', {})
@@ -28,7 +28,9 @@ class Activities extends React.Component {
             var data = [];
             for (var i = 0; i < result.rows.length; i++) {
               data.push({
-                name: result.rows.item(i).name
+                name: result.rows.item(i).name,
+                category: result.rows.item(i).category,
+                details: result.rows.item(i).details
               })
             }
             this.setState(() => ({

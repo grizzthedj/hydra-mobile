@@ -14,6 +14,7 @@ import Activities from './pages/Activities';
 import Activity from './pages/Activity';
 import Reminders from './pages/Reminders';
 import Journals from './pages/Journals';
+import Journal from './pages/Journal';
 import Settings from './pages/Settings';
 
 /* Core CSS required for Ionic components to work properly */
@@ -51,6 +52,9 @@ const App: React.FC = () => (
           </Route>
           <Route exact path="/journals">
             <Journals />
+          </Route>
+          <Route exact path="/journals/new">
+            <Journal />
           </Route>
           <Route exact path="/settings">
             <Settings />
