@@ -35,7 +35,7 @@ class Activity extends React.Component {
   create() {
     try {
       SQLite.create({
-        name: 'hydra.db', location: 'default'
+        name: 'hydra9.db', location: 'default'
       }).then(async (db: SQLiteObject) => {
         try {
           db.executeSql('insert into activities values(?, ?, ?, ?, ?)', [this.state.name, this.state.status, this.state.category, this.state.details, this.state.complete_by])
@@ -55,7 +55,7 @@ class Activity extends React.Component {
   update() {
     try {
       SQLite.create({
-        name: 'hydra.db', location: 'default'
+        name: 'hydra9.db', location: 'default'
       }).then(async (db: SQLiteObject) => {
         try {
           db.executeSql('update activities set name = ?, status = ?, category = ?, details = ?, complete_by = ?) where rowid = ?', [this.state.name, this.state.status, this.state.category, this.state.details, this.state.complete_by, this.state.id])
@@ -75,7 +75,7 @@ class Activity extends React.Component {
   get(id) {
     try {
       SQLite.create({
-        name: 'hydra.db', location: 'default'
+        name: 'hydra9.db', location: 'default'
       }).then(async (db: SQLiteObject) => {
         try {
           db.executeSql('select rowid as id, name, status, category, details, complete_by from activities where rowid = ?', [id]).then(result => {
