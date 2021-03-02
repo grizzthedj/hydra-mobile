@@ -1,0 +1,13 @@
+
+    1. Create a new Ionic App, using React
+    2. Downloaded Android Studio
+    3. Once installed, open the AVD Manager in Android Studio(AVD = Android Virtual Device), and select Pixel 3. Then click the Download link for the "Q" image (x86)
+    4. Go to the root directory and run the commands below
+
+npm install
+ionic integrations enable capacitor
+npx cap init hydra-mobile
+gem install cocoapods
+cocoapods pod install
+ionic capacitor run android    (This command should startup Android Studio)
+
