@@ -4,10 +4,12 @@
     3. Once installed, open the AVD Manager in Android Studio(AVD = Android Virtual Device), and select Pixel 3. Then click the Download link for the "Q" image (x86)
     4. Go to the root directory and run the commands below
 
+source ~/.bashrc
+nvm use 12
 npm install
 ionic integrations enable capacitor
 npx cap init hydra-mobile
-gem install cocoapods
-cocoapods pod install
+gem install cocoapods     # Do I need this?
+cocoapods pod install     # Do I need this?
 ionic capacitor run android    (This command should startup Android Studio)
 

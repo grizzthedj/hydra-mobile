@@ -7,7 +7,6 @@ class Activity extends React.Component {
   constructor(props) {
     super(props);
     const urlParams = window.location.href.split('/');
-    console.log("===== Params: " + urlParams);
     const idParam = urlParams[urlParams.length - 1];
     const id = (idParam && parseInt(idParam)) ? idParam : 0;
 
@@ -35,7 +34,7 @@ class Activity extends React.Component {
   create() {
     try {
       SQLite.create({
-        name: 'hydra9.db', location: 'default'
+        name: 'hydra10.db', location: 'default'
       }).then(async (db: SQLiteObject) => {
         try {
           db.executeSql('insert into activities values(?, ?, ?, ?, ?)', [this.state.name, this.state.status, this.state.category, this.state.details, this.state.complete_by])
@@ -55,7 +54,7 @@ class Activity extends React.Component {
   update() {
     try {
       SQLite.create({
-        name: 'hydra9.db', location: 'default'
+        name: 'hydra10.db', location: 'default'
       }).then(async (db: SQLiteObject) => {
         try {
           db.executeSql('update activities set name = ?, status = ?, category = ?, details = ?, complete_by = ?) where rowid = ?', [this.state.name, this.state.status, this.state.category, this.state.details, this.state.complete_by, this.state.id])
@@ -75,7 +74,7 @@ class Activity extends React.Component {
   get(id) {
     try {
       SQLite.create({
-        name: 'hydra9.db', location: 'default'
+        name: 'hydra10.db', location: 'default'
       }).then(async (db: SQLiteObject) => {
         try {
           db.executeSql('select rowid as id, name, status, category, details, complete_by from activities where rowid = ?', [id]).then(result => {
@@ -153,7 +152,7 @@ class Activity extends React.Component {
         
           <IonItemDivider>Complete By</IonItemDivider>
           <IonItem>
-            <IonDatetime id="complete_by" name="complete_by" value={this.state.complete_by} displayFormat="MMM DD, YYYY HH:mm" minuteValues="0,15,30,45"></IonDatetime>
+            <IonDatetime id="complete_by" name="complete_by" value={this.state.complete_by} displayFormat="MMM DD, YYYY HH:mm" minuteValues="0,15,30,45" onIonChange={e => this.handleChange(e)}></IonDatetime>
           </IonItem>
 
           <IonItemDivider>Details</IonItemDivider>
@@ -161,7 +160,7 @@ class Activity extends React.Component {
             <IonTextarea id="details" name="details" value={this.state.details} placeholder="More detail please ..." onIonChange={e => this.handleChange(e)}></IonTextarea> 
           </IonItem>
 
-          <IonButton routerLink="/activities" onClick={this.state.id > 0 ? this.update : this.create}>{this.state.submitButtonText}</IonButton>
+          <IonButton onClick={this.state.id > 0 ? this.update : this.create}>{this.state.submitButtonText}</IonButton>
           <IonButton routerLink="/activities">Cancel</IonButton>
         </IonContent>
       </IonPage>

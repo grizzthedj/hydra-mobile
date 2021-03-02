@@ -22,7 +22,7 @@ class Journal extends React.Component {
   create() {
     try {
       SQLite.create({
-        name: 'hydra.db', location: 'default'
+        name: 'hydra10.db', location: 'default'
       }).then(async (db: SQLiteObject) => {
         try {
           db.executeSql('insert into journals values(?, ?, ?, ?, ?)', [this.state.mood, this.state.start_date, this.state.went_well, this.state.gone_better, this.state.thankful])
